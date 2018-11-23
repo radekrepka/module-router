@@ -1,0 +1,22 @@
+{
+  "name": "radekrepka/nette-module-route",
+  "description": "Library for routing modules",
+  "version": "1.1.0",
+  "keywords": ["module-route"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [{
+    "name": "Radek Řepka",
+    "homepage": "https://github.com/radekrepka"
+  }],
+  "require": {
+    "php": "^5.6 || ^7.0",
+    "nette/di": "~2.4",
+    "kdyby/translation": "~2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "RadekRepka\\ModuleRoute\\": "src/"
+    }
+  }
+}
