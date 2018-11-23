@@ -1,7 +1,7 @@
 {
   "name": "radekrepka/module-router",
   "description": "Library for routing modules",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "keywords": ["module-router"],
   "type": "library",
   "license": "MIT",
