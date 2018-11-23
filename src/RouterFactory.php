@@ -1,6 +1,6 @@
 <?php
 
-namespace RadekRepka\ModuleRoute;
+namespace RadekRepka\ModuleRouter;
 
 use Nette;
 use Nette\Application\Routers\RouteList;

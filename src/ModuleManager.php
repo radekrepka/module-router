@@ -1,6 +1,6 @@
 <?php
 
-namespace RadekRepka\ModuleRoute;
+namespace RadekRepka\ModuleRouter;
 
 use Kdyby\Translation\Translator;
 use Nette\SmartObject;

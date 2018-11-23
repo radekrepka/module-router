@@ -1,10 +1,10 @@
 <?php
-namespace RadekRepka\ModuleRoute\DI;
+namespace RadekRepka\ModuleRouter\DI;
 
 use Nette\DI\CompilerExtension;
-use RadekRepka\ModuleRoute\ModuleManager;
+use RadekRepka\ModuleRouteR\ModuleManager;
 
-class ModuleRouteExtension extends CompilerExtension {
+class ModuleRouterExtension extends CompilerExtension {
 
 	public function loadConfiguration() {
 		$builder = $this->getContainerBuilder();
