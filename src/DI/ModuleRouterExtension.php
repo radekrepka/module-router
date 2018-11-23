@@ -2,7 +2,7 @@
 namespace RadekRepka\ModuleRouter\DI;
 
 use Nette\DI\CompilerExtension;
-use RadekRepka\ModuleRouteR\ModuleManager;
+use RadekRepka\ModuleRouter\ModuleManager;
 
 class ModuleRouterExtension extends CompilerExtension {
 
