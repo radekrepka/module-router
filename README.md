@@ -1,7 +1,14 @@
 # Module router
 
 - [Description](#description)
+- [Installation](#installation)
 - [Usage](#usage)
+
+## Installation
+
+```sh
+$ composer require radekrepka/module-router
+```
 
 ## Description
 Simple tool which generates menu, links and titles of pages.
