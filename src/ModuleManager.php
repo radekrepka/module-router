@@ -3,9 +3,11 @@
 namespace RadekRepka\ModuleRouter;
 
 use Kdyby\Translation\Translator;
+use Nette\Security\User;
 use Nette\SmartObject;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\ArrayList;
+use Tracy\Debugger;
 
 class ModuleManager {
 	use SmartObject;
@@ -33,11 +35,12 @@ class ModuleManager {
 	}
 
 	/**
+	 * @param User|null $user
 	 * @return array|ArrayHash
 	 */
-	public function getModules() {
-		if($this->modules == null) {
-			$this->modules = $this->buildModules($this->neonArray);
+	public function getModules(User $user = null) {
+		if($this->modules == null || $user) {
+			$this->modules = $this->buildModules($this->neonArray, $user);
 		}
 		return $this->modules;
 	}
@@ -54,16 +57,17 @@ class ModuleManager {
 
 	/**
 	 * @param array $modulesArray
+	 * @param User|null $user
 	 * @param string|null $parent
 	 * @return ArrayHash
 	 */
-	protected function buildModules(array $modulesArray, string $parent = null) {
+	protected function buildModules(array $modulesArray, User $user = null, string $parent = null) {
 		$routes = new ArrayHash();
 		foreach($modulesArray as $key => $moduleDat) {
 			if (is_array($moduleDat) && array_key_exists('modules', $moduleDat)) {
 				$moduleName = $this->translator->translate('modules.' . $key . '._name');
 				$module = new Module($key, $moduleName, $parent);
-				$module->setChildren($this->buildModules($moduleDat['modules'], $key));
+				$module->setChildren($this->buildModules($moduleDat['modules'], $user, $key));
 			}
 			else {
 				if ($parent) {
@@ -72,11 +76,33 @@ class ModuleManager {
 				else {
 					$moduleName = $this->translator->translate('modules.' . $key);
 				}
+
 				$module = new Module($key, $moduleName, $parent);
-				if (is_array($moduleDat) && array_key_exists('icon', $moduleDat))
-					$module->setIcon($moduleDat['icon']);
+
+				if (is_array($moduleDat)){
+					if (array_key_exists('icon', $moduleDat)) {
+						$module->setIcon($moduleDat['icon']);
+					}
+
+					if (array_key_exists('allow', $moduleDat) && is_array($moduleDat['allow'])) {
+						$module->setAllows($moduleDat['allow']);
+					}
+				}
 			}
-			$routes[$key] = $module;
+
+			if ($user &&
+				is_array($moduleDat) &&
+				array_key_exists('allow', $moduleDat) &&
+				is_array($moduleDat['allow'])
+			) {
+				if ($module->isAllowed($user)) {
+					$routes[$key] = $module;
+				}
+			}
+			else {
+				$routes[$key] = $module;
+			}
+//			$routes[$key] = $module;
 		}
 		return $routes;
 	}

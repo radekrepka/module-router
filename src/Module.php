@@ -22,6 +22,9 @@ class Module {
 	/** @var string */
 	protected $icon;
 
+	/** @var array */
+	protected $allows;
+
 	/** @var Nette\Utils\ArrayHash */
 	protected $children;
 
@@ -38,10 +41,25 @@ class Module {
 	}
 
 	/**
+	 * @param Nette\Security\User $user
+	 * @return array
+	 */
+	public function isAllowed(Nette\Security\User $user) {
+		return array_intersect($user->getRoles(), $this->getAllows());
+	}
+
+	/**
 	 * @param string $icon
 	 */
 	public function setIcon(string $icon) {
 		$this->icon = $icon;
+	}
+
+	/**
+	 * @param array $allows
+	 */
+	public function setAllows(array $allows) {
+		$this->allows = $allows;
 	}
 
 	/**
@@ -100,6 +118,13 @@ class Module {
 
 	/**
 	 * @return array
+	 */
+	public function getAllows() {
+		return $this->allows;
+	}
+
+	/**
+	 * @return Nette\Utils\ArrayHash
 	 */
 	public function getChildren() {
 		return $this->children;
